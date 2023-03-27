@@ -1,17 +1,20 @@
-import React from 'react'
-import { StyleSheet } from 'react-native'
+import React, {useContext} from 'react'
+import {View} from 'react-native'
 import { Text } from 'react-native-paper'
-import { theme } from '../core/theme'
+import BackButton from "./BackButton";
+import {NavigationContext} from "../helpers/navigationHelper";
 
-export default function Header(props) {
-  return <Text style={styles.header} {...props} />
+export default function Header({title, nav}) {
+   if (!nav) nav = useContext(NavigationContext)
+  if (nav && nav.canGoBack()) return (
+  <View style={{flexDirection: 'row'}}>
+    <BackButton nav={nav} />
+    <Text style={{flex: 1, paddingBottom: 5, fontFamily: 'Inter-Bold', textAlign: 'center', fontSize: 30, width: '100%'}}>{title}</Text>
+  </View>
+  );
+  else return (
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{flex: 1, paddingBottom: 5, fontFamily: 'Inter-Bold', textAlign: 'center', fontSize: 30, width: '100%'}}>{title}</Text>
+        </View>
+  );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 21,
-    color: theme.colors.primary,
-    fontWeight: 'bold',
-    paddingVertical: 12,
-  },
-})

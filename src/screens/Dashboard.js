@@ -11,19 +11,20 @@ export default function Dashboard({ navigation }) {
       <Logo />
       <Header>Let’s start</Header>
       <Paragraph>
-        Your amazing app starts here. Open you favorite code editor and start
-        editing this project.
+        Even though you're broke, now it's easier than ever before to give
+         the last dollars in your back account to this overpriced restaurant!
       </Paragraph>
       <Button
-        mode="outlined"
+        mode="contained"
         onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'StartScreen' }],
-          })
+          // navigation.reset({
+          //   index: 0,
+          //   routes: [{ name: 'TableScreen' }],
+          // })
+              navigation.navigate('TableScreen')
         }
       >
-        Logout
+        Continue
       </Button>
     </Background>
   )

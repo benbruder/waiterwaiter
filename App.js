@@ -1,4 +1,4 @@
-import {Button, ScrollView, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React, {useCallback} from "react";
@@ -7,42 +7,20 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { theme } from './src/core/theme'
 import {
-  StartScreen,
-  TableScreen,
-  LoginScreen,
-  RegisterScreen,
-  ResetPasswordScreen,
-  Dashboard,
+   StartScreen,
+   TableScreen,
+   MenuScreen,
+   ItemScreen,
+   LoginScreen,
+   RegisterScreen,
+   ResetPasswordScreen,
+   Dashboard,
 } from './src/screens'
 
+// noinspection JSIgnoredPromiseFromCall
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
-const MenuScreen = ({navigation, route}) => {
-   return (
-     <ScrollView><View style={{flex: 1, flexGrow: 1}}>
-           <Text style={{color: '#000', justifyContent: 'center', flexDirection: 'row'}}>Table {route.params.table_id} Menu:</Text>
-           <Button
-               title="Broccoli"
-               onPress={() => navigation.navigate('Items', {name: 'Broccoli'})}
-           />
-           <Button
-               title="Beef"
-               onPress={() => navigation.navigate('Items', {name: 'Beef'})}
-           />
-       </View>
-     </ScrollView>
-   )
-};
-
-const ItemScreen = ({route}) => {
-  return (
-      <View style={{flex: 10}}>
-        <Text style={[theme.styles.table_text, {color: '#000', justifyContent: 'center', flexDirection: 'row'}]}>Details for {route.params.name}:</Text>
-          <Text style={[theme.styles.table_subtext]}> Lorem ipsum delor set...</Text>
-      </View>
-  )
-};
 
 const AddTableScreen = ({route}) => {
     return (
@@ -52,6 +30,7 @@ const AddTableScreen = ({route}) => {
     )
 };
 
+// noinspection JSUnusedGlobalSymbols
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Inter': require('./assets/fonts/Inter-Variable.ttf'),
@@ -76,7 +55,7 @@ export default function App() {
         <Provider theme={theme}>
           <NavigationContainer>
             <View onLayout={onLayoutRootView}></View>
-            <Stack.Navigator initialRouteName="Tables">
+            <Stack.Navigator initialRouteName="Dashboard" screenOptions={{headerShown: false}}>
               <Stack.Screen name="StartScreen" component={StartScreen} />
               <Stack.Screen name="LoginScreen" component={LoginScreen} />
               <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
@@ -85,9 +64,9 @@ export default function App() {
                   name="ResetPasswordScreen"
                   component={ResetPasswordScreen}
               />
-              <Stack.Screen name="Tables" options={{ title: "Select a Table" }} component={TableScreen} />
-              <Stack.Screen name="Menu" component={MenuScreen} options={({ route }) => ({title: 'Table ' + route.params.table_id + ' Menu'})} />
-              <Stack.Screen name="Items" component={ItemScreen} />
+              <Stack.Screen name="TableScreen" options={{ title: "Select a Table" }} component={TableScreen} />
+              <Stack.Screen name="MenuScreen" component={MenuScreen} options={({ route }) => ({title: 'Table ' + route.params.table_id + ' Menu'})} />
+              <Stack.Screen name="ItemScreen" component={ItemScreen} />
               <Stack.Screen name="Add Table" component={AddTableScreen} />
             </Stack.Navigator>
           </NavigationContainer>

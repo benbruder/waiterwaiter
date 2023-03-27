@@ -3,24 +3,24 @@ import {Text, TouchableOpacity, StyleSheet} from "react-native";
 import React, {useContext} from "react";
 import {NavigationContext} from "../helpers/navigationHelper";
 
-export default function TableButton(props, {children}) {
+export default function TableButton({children, table_id, type, count, subtext, text_style, subtext_style}) {
    const navigation = useContext(NavigationContext)
-   if (props.type === 'add') return (
+   if (type === 'add') return (
          <TouchableOpacity
-               style={[styles.tables, {backgroundColor: theme.colors.add_button}]}
-               onPress={() => navigation.navigate('Tables', {table_id: -2})}>
+               style={[styles.tables, {backgroundColor: theme.add_button}]}
+               onPress={() => navigation.navigate('TableScreen', {table_id: -2})}>
             <Text style={styles.table_add}>+</Text>
          </TouchableOpacity>
    );
-   else if (props.type === 'blank') return (
+   else if (type === 'blank') return (
          <TouchableOpacity style={[styles.tables, {backgroundColor: 'rgba(0)'}]} />
    );
    else return (
          <TouchableOpacity
                style={styles.tables}
-               onPress={() => navigation.navigate('Menu', {table_id: props.table_id})}>
-            <Text style={[styles.table_text, props.text_style]}>{children || ('Table ' + props.table_id)}</Text>
-            <Text style={[styles.table_subtext, props.subtext_style]}>{props.subtext || ('(' + props.count + ' people)')}</Text>
+               onPress={() => navigation.navigate('MenuScreen', {table_id: table_id})}>
+            <Text style={[styles.table_text, text_style]}>{children || ('Table ' + table_id)}</Text>
+            <Text style={[styles.table_subtext, subtext_style]}>{subtext || ('(' + count + ' people)')}</Text>
          </TouchableOpacity>
    );
 }
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       aspectRatio: 1,
-      backgroundColor: theme.colors.table,
-      margin: 5,
-      borderRadius: 10
+      backgroundColor: theme.table,
+      margin: 7.5,
+      borderRadius: 20
    },
    table_text: {
       color: '#fff',
