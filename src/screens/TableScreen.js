@@ -1,17 +1,15 @@
 import {View} from "react-native";
 import React from "react";
-import {NavigationProvider} from "../helpers/navigationHelper";
 import TableButton from "../components/TableButton";
 import Scroll from "../components/Scroll";
 
-export default function TableScreen({navigation}) {
+export default function TableScreen() {
    /**
     * TODO:
     *   - Add functionality to 'add table' button
     */
    return (
-         <NavigationProvider navigation={navigation}>
-            <Scroll title={"TABLES"}>
+         <Scroll title={"TABLES"}>
              <View style={{flexDirection: 'row'}}>
                 <TableButton table_id={1} count={3}/>
                 <TableButton table_id={2} count={2}/>
@@ -32,7 +30,6 @@ export default function TableScreen({navigation}) {
                 <TableButton type={'add'} />
                 <TableButton type={'blank'} />
              </View>
-            </Scroll>
-         </NavigationProvider>
+         </Scroll>
    );
 };

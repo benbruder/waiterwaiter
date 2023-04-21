@@ -6,6 +6,7 @@ import Button from '../components/Button'
 import Paragraph from '../components/Paragraph'
 
 export default function StartScreen({ navigation }) {
+
   return (
     <Background>
       <Logo />

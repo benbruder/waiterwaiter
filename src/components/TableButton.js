@@ -1,13 +1,12 @@
 import {theme} from "../core/theme";
 import {Text, TouchableOpacity, StyleSheet} from "react-native";
-import React, {useContext} from "react";
-import {NavigationContext} from "../helpers/navigationHelper";
+import {useNavigation} from "@react-navigation/native";
 
 export default function TableButton({children, table_id, type, count, subtext, text_style, subtext_style}) {
-   const navigation = useContext(NavigationContext)
+   const navigation = useNavigation();
    if (type === 'add') return (
          <TouchableOpacity
-               style={[styles.tables, {backgroundColor: theme.add_button}]}
+               style={[styles.tables, {backgroundColor: '#bbb'}]}
                onPress={() => navigation.navigate('TableScreen', {table_id: -2})}>
             <Text style={styles.table_add}>+</Text>
          </TouchableOpacity>

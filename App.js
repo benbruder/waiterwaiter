@@ -1,5 +1,5 @@
-import {Text, View} from 'react-native';
-import { useFonts } from 'expo-font';
+import {View} from 'react-native';
+import useCustomFonts from "./src/core/fonts";
 import * as SplashScreen from 'expo-splash-screen';
 import React, {useCallback} from "react";
 import { Provider } from 'react-native-paper'
@@ -15,30 +15,17 @@ import {
    RegisterScreen,
    ResetPasswordScreen,
    Dashboard,
+   AddTableScreen,
 } from './src/screens'
+import {StateProvider} from "./src/helpers/stateProvider";
 
 // noinspection JSIgnoredPromiseFromCall
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
-
-const AddTableScreen = ({route}) => {
-    return (
-        <View style={{flex: 10}}>
-            <Text>Details for {route.params.name}:</Text>
-        </View>
-    )
-};
-
 // noinspection JSUnusedGlobalSymbols
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    'Inter': require('./assets/fonts/Inter-Variable.ttf'),
-    'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
-    'Inter-Italic': require('./assets/fonts/Inter-Italic.ttf'),
-    'Alef': require('./assets/fonts/Alef-Regular.ttf'),
-    'Alef-Bold': require('./assets/fonts/Alef-Bold.ttf')
-  });
+  const [fontsLoaded] = useCustomFonts(); // loads the fonts from core/fonts.js
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -55,20 +42,22 @@ export default function App() {
         <Provider theme={theme}>
           <NavigationContainer>
             <View onLayout={onLayoutRootView}></View>
-            <Stack.Navigator initialRouteName="Dashboard" screenOptions={{headerShown: false}}>
-              <Stack.Screen name="StartScreen" component={StartScreen} />
-              <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-              <Stack.Screen name="Dashboard" component={Dashboard} />
-              <Stack.Screen
-                  name="ResetPasswordScreen"
-                  component={ResetPasswordScreen}
-              />
-              <Stack.Screen name="TableScreen" options={{ title: "Select a Table" }} component={TableScreen} />
-              <Stack.Screen name="MenuScreen" component={MenuScreen} options={({ route }) => ({title: 'Table ' + route.params.table_id + ' Menu'})} />
-              <Stack.Screen name="ItemScreen" component={ItemScreen} />
-              <Stack.Screen name="Add Table" component={AddTableScreen} />
-            </Stack.Navigator>
+             <StateProvider>
+               <Stack.Navigator initialRouteName="Dashboard" screenOptions={{headerShown: false}}>
+                 <Stack.Screen name="StartScreen" component={StartScreen} />
+                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                 <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                 <Stack.Screen name="Dashboard" component={Dashboard} />
+                 <Stack.Screen
+                     name="ResetPasswordScreen"
+                     component={ResetPasswordScreen}
+                 />
+                 <Stack.Screen name="TableScreen" options={{ title: "Select a Table" }} component={TableScreen} />
+                 <Stack.Screen name="MenuScreen" component={MenuScreen} options={({ route }) => ({title: 'Table ' + route.params.table_id + ' Menu'})} />
+                 <Stack.Screen name="ItemScreen" component={ItemScreen} />
+                 <Stack.Screen name="Add Table" component={AddTableScreen} />
+               </Stack.Navigator>
+             </StateProvider>
           </NavigationContainer>
         </Provider>
   );
